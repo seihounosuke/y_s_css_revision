@@ -511,34 +511,82 @@ body#news_detail .main_text .wp-block-quote {
   letter-spacing: var(--yr-ls-body);
 }
 
-/* テーブル */
+/* ============================================================
+   テーブル — wp-block-table / main_text table 共通
+
+   注意: このページのテーブルは <thead>/<th> を使わず、
+   1行目の <td> + <strong> がヘッダー代わりのため
+   tr:first-child で視覚的ヘッダーを表現する
+   ============================================================ */
+
+/* ① ラッパー figure — インライン font-size:20px を上書き＆横スクロール対応 */
+body#news_detail .main_text figure.wp-block-table {
+  font-size: var(--yr-font-size-base) !important; /* 20px → 17px */
+  margin: 1.75em 0;
+  overflow-x: auto;             /* SP での横スクロール */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ② テーブル本体 */
+body#news_detail .main_text .wp-block-table table,
 body#news_detail .main_text table {
   border-collapse: collapse;
   width: 100%;
-  border-radius: var(--yr-radius-sm);
-  overflow: hidden;
-  font-size: 14px;
-  line-height: 1.7;
+  min-width: 480px;             /* 小さい画面でも列が潰れない最低幅 */
+  font-size: inherit;           /* figure の font-size を継承 */
+  line-height: 1.75;
   letter-spacing: var(--yr-ls-body);
+  border: 1px solid var(--yr-color-border);
 }
 
+/* ③ <th> がある場合（標準的なテーブル） */
+body#news_detail .main_text .wp-block-table th,
 body#news_detail .main_text th {
   background: var(--yr-color-primary);
   color: #fff;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: var(--yr-ls-ui);
-  padding: 10px 14px;
-  border-color: rgba(255, 255, 255, 0.3);
+  padding: 12px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  vertical-align: middle;
 }
 
+/* ④ 全 td の基本スタイル */
+body#news_detail .main_text .wp-block-table td,
 body#news_detail .main_text td {
-  padding: 10px 14px;
-  border-color: var(--yr-color-border);
-  vertical-align: top;
+  padding: 12px 16px;
+  border: 1px solid var(--yr-color-border);
+  vertical-align: middle;
+  line-height: 1.75;
 }
 
-body#news_detail .main_text tr:nth-child(even) td {
-  background: var(--yr-color-bg);
+/* ⑤ 1行目が <th> を持たない場合（td + strong でヘッダー代用）
+      → 濃い背景＋白テキストで視覚的ヘッダーとして強調 */
+body#news_detail .main_text .wp-block-table tbody tr:first-child td,
+body#news_detail .main_text table tbody tr:first-child td:not([data-skip-header]) {
+  background: var(--yr-color-primary);
+  color: #fff;
+  font-weight: 700;
+  border-color: rgba(255, 255, 255, 0.25);
+  letter-spacing: var(--yr-ls-ui);
+}
+
+/* ⑥ 1行目の strong テキストも白に */
+body#news_detail .main_text .wp-block-table tbody tr:first-child td strong {
+  color: inherit;
+}
+
+/* ⑦ ゼブラストライプ（2行目以降の偶数行） */
+body#news_detail .main_text .wp-block-table tbody tr:nth-child(even):not(:first-child) td,
+body#news_detail .main_text table tbody tr:nth-child(even):not(:first-child) td {
+  background: rgba(79, 114, 176, 0.04);
+}
+
+/* ⑧ ホバー行ハイライト */
+body#news_detail .main_text .wp-block-table tbody tr:not(:first-child):hover td,
+body#news_detail .main_text table tbody tr:not(:first-child):hover td {
+  background: rgba(79, 114, 176, 0.08);
+  transition: background var(--yr-transition-base);
 }
 
 /* 画像キャプション */
