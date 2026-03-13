@@ -657,7 +657,7 @@ body#news_detail .article_main .post_data {
 
 
 /* ============================================================
-   6. ハイライト（マーカー）
+   6. ハイライト（マーカー）& インラインカラー
    ============================================================ */
 body#news_detail .article_main .marker_yellow {
   background: linear-gradient(to top, #f5e94a 35%, transparent 35%);
@@ -669,6 +669,13 @@ body#news_detail .article_main .marker_blue {
   background: linear-gradient(to top, #a8d4f5 35%, transparent 35%);
   font-weight: 600;
   padding: 0 2px;
+}
+
+/* インラインカラー（WordPress ブロックエディタの has-inline-color）
+   元コードで font-size: 14px !important が固定されており、
+   本文サイズ増加後に周囲より小さく見える問題を修正 */
+#news_detail .has-inline-color.has-vivid-cyan-blue-color {
+  font-size: inherit !important;
 }
 
 
@@ -1084,7 +1091,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- begin header -->
 <header>
 		<div id="header_inner">
-		<h1 id="logo"><a href="https://yomisama.overfocus.co.jp/"><img src="https://yomisama.overfocus.co.jp/common/images/header_logo.png" alt="ロゴ"></a></h1>
+		<h1 id="logo"><a href="/"><img src="https://yomisama.overfocus.co.jp/common/images/header_logo.png" alt="ロゴ"></a></h1>
 		<nav>
 			<ul>
 				<li><a href="https://yomisama.overfocus.co.jp/program/">ヨミサマ。の強み</a></li>
@@ -1121,7 +1128,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	<div id="contents">
 		<div class="wrap">
 			<ul id="pankuzu">
-				<li><a href="https://yomisama.overfocus.co.jp/">東大生による国語専門個別指導 ヨミサマ。</a></li>
+				<li><a href="/">東大生による国語専門個別指導 ヨミサマ。</a></li>
 				<li><a href="https://yomisama.overfocus.co.jp/news/">記事一覧</a></li>
 				<li><span>【ヨミサマ。体験記#10】定期テストの点数が5割から8-9割に急成長。高得点を維持できるようになった秘訣とは？</span></li>
 			</ul>
@@ -1417,7 +1424,7 @@ body .button_reserve .free {
 			<li><a href="https://yomisama.overfocus.co.jp/overview/">会社情報</a></li>
 			<li><a href="https://yomisama.overfocus.co.jp/privacy/">プライバシーポリシー</a></li>
 		</ul>
-		<a href="https://yomisama.overfocus.co.jp/" target="_blank" id="footer_logo"><img src="https://yomisama.overfocus.co.jp/common/images/footer_logo.jpg" alt="ロゴ"></a>
+		<a href="/" target="_blank" id="footer_logo"><img src="https://yomisama.overfocus.co.jp/common/images/footer_logo.jpg" alt="ロゴ"></a>
 	</div></footer>
 <!-- / end footer -->
 </body>

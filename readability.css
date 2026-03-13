@@ -254,7 +254,7 @@ body#news_detail .article_main .post_data {
 
 
 /* ============================================================
-   6. ハイライト（マーカー）
+   6. ハイライト（マーカー）& インラインカラー
    ============================================================ */
 body#news_detail .article_main .marker_yellow {
   background: linear-gradient(to top, #f5e94a 35%, transparent 35%);
@@ -266,6 +266,13 @@ body#news_detail .article_main .marker_blue {
   background: linear-gradient(to top, #a8d4f5 35%, transparent 35%);
   font-weight: 600;
   padding: 0 2px;
+}
+
+/* インラインカラー（WordPress ブロックエディタの has-inline-color）
+   元コードで font-size: 14px !important が固定されており、
+   本文サイズ増加後に周囲より小さく見える問題を修正 */
+#news_detail .has-inline-color.has-vivid-cyan-blue-color {
+  font-size: inherit !important;
 }
 
 
