@@ -1,0 +1,671 @@
+@charset "UTF-8";
+
+/*
+ * Readability Enhancement CSS
+ * yomisama.overfocus.co.jp / news detail page
+ *
+ * 改善ポイント:
+ *   - 本文の行間・字間の大幅改善（Note / Notion レベルの読みやすさ）
+ *   - 文字サイズの底上げ（SP含む）
+ *   - font-weight 300 → 400 へ（細すぎる和文を修正）
+ *   - 見出し階層の視認性向上（余白・スタイル改善）
+ *   - 角丸の統一・洗練（過剰な丸みを整理）
+ *   - 余白・スペーシングの改善
+ *   - カード・UI要素の細部ブラッシュアップ
+ *   - 配色は既存パレットを完全維持
+ */
+
+/* ============================================================
+   0. CSS カスタムプロパティ（デザイントークン）
+   ============================================================ */
+:root {
+  /* ブランドカラー（既存踏襲） */
+  --yr-color-primary:        #4F72B0;
+  --yr-color-primary-light:  rgba(79, 114, 176, 0.08);
+  --yr-color-primary-mid:    rgba(79, 114, 176, 0.18);
+  --yr-color-accent:         #9E230E;
+  --yr-color-line:           #06C755;
+
+  /* テキストカラー */
+  --yr-color-text:           #1c1c1e;   /* 純黒より柔らかく、Notion準拠 */
+  --yr-color-text-sub:       #4a4a4a;
+  --yr-color-text-muted:     #7a7a7a;
+  --yr-color-text-placeholder: #ababab;
+
+  /* 背景・ボーダー */
+  --yr-color-bg:             #f8f8f7;   /* 純白でなく微クリーム（目の疲れ軽減） */
+  --yr-color-bg-white:       #ffffff;
+  --yr-color-bg-section:     #f3f3f2;
+  --yr-color-border:         #e5e5e3;   /* 薄くてクリアなボーダー */
+  --yr-color-border-strong:  #c8c8c5;
+
+  /* タイポグラフィ */
+  --yr-font-base:            "tt_m", "Hiragino Kaku Gothic Pro", "Yu Gothic", "游ゴシック", "メイリオ", Meiryo, sans-serif;
+  --yr-font-size-base:       17px;      /* 16px → 17px で読みやすさ向上 */
+  --yr-font-size-sm:         15px;
+  --yr-font-size-xs:         13px;
+
+  /* PC 見出しサイズ */
+  --yr-h1-pc:                30px;
+  --yr-h2-pc:                24px;
+  --yr-h3-pc:                20px;
+
+  /* SP 見出しサイズ */
+  --yr-h1-sp:                22px;
+  --yr-h2-sp:                18px;
+  --yr-h3-sp:                16px;
+
+  /* 行間・字間 */
+  --yr-lh-body:              2.0;       /* 日本語本文に最適な行間 */
+  --yr-lh-body-sp:           1.95;
+  --yr-lh-heading:           1.55;
+  --yr-ls-body:              0.05em;    /* 和文に適度な字間 */
+  --yr-ls-heading:           0.04em;
+  --yr-ls-ui:                0.03em;
+
+  /* 角丸（丸みすぎない洗練されたサイズ感） */
+  --yr-radius-xs:            4px;
+  --yr-radius-sm:            8px;
+  --yr-radius-md:            12px;
+  --yr-radius-lg:            16px;
+  --yr-radius-pill:          9999px;
+
+  /* シャドウ */
+  --yr-shadow-card:          0 2px 10px rgba(0, 0, 0, 0.07);
+  --yr-shadow-card-hover:    0 6px 20px rgba(0, 0, 0, 0.11);
+  --yr-shadow-sm:            0 1px 4px rgba(0, 0, 0, 0.08);
+
+  /* トランジション */
+  --yr-transition-base:      0.2s ease;
+}
+
+
+/* ============================================================
+   1. ベース / ボディ
+   ============================================================ */
+body {
+  background: var(--yr-color-bg);
+  color: var(--yr-color-text);
+  font-family: var(--yr-font-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+a:link,
+a:visited {
+  color: var(--yr-color-text);
+}
+
+
+/* ============================================================
+   2. パンくずリスト
+   ============================================================ */
+#pankuzu {
+  color: var(--yr-color-text-muted);
+}
+
+#pankuzu a:link,
+#pankuzu a:visited {
+  color: var(--yr-color-primary);
+}
+
+
+/* ============================================================
+   3. 記事詳細ページ — コアタイポグラフィ
+   ============================================================ */
+
+/* ---- h1（記事タイトル） ---- */
+body#news_detail .article_main h1 {
+  line-height: var(--yr-lh-heading);
+  letter-spacing: var(--yr-ls-heading);
+  color: var(--yr-color-text);
+  font-weight: 700;
+  /* font-size はメディアクエリ内で上書き */
+}
+
+/* ---- h2（大見出し） ----
+     既存: border-left のみのシンプルなスタイル
+     改善: 左ボーダー + 薄い背景で視認性UP、内部余白で呼吸感を確保 */
+body#news_detail .article_main h2 {
+  line-height: var(--yr-lh-heading);
+  letter-spacing: var(--yr-ls-heading);
+  color: var(--yr-color-text);
+  font-weight: 700;
+  background: var(--yr-color-primary-light);
+  border-radius: 0 var(--yr-radius-sm) var(--yr-radius-sm) 0;
+  /* padding / font-size はメディアクエリ内 */
+}
+
+/* ---- h3（中見出し） ----
+     既存: border-bottom dashed black（視覚的にうるさい）
+     改善: 2色グラデーションボーダー（細くてスマート）*/
+body#news_detail .article_main h3 {
+  line-height: var(--yr-lh-heading);
+  letter-spacing: var(--yr-ls-heading);
+  color: var(--yr-color-text);
+  font-weight: 700;
+  border-bottom: none; /* dashed black を上書き */
+  padding-bottom: 8px;
+  position: relative;
+  /* font-size はメディアクエリ内 */
+}
+
+body#news_detail .article_main h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, var(--yr-color-primary) 0%, var(--yr-color-primary) 25%, var(--yr-color-border) 25%);
+}
+
+/* ---- 本文 p ----
+     既存: font-weight 300; line-height 24px（固定値 = 劣悪）
+     改善: font-weight 400; line-height 2.0; letter-spacing 0.05em */
+body#news_detail .article_main p {
+  font-weight: 400;
+  line-height: var(--yr-lh-body);
+  letter-spacing: var(--yr-ls-body);
+  color: var(--yr-color-text);
+  margin: 1.35em 0;
+}
+
+/* main_text 内の本文・リスト系 */
+body#news_detail .main_text p {
+  font-weight: 400;
+  line-height: var(--yr-lh-body);
+  letter-spacing: var(--yr-ls-body);
+  color: var(--yr-color-text);
+  margin: 1.35em 0;
+}
+
+body#news_detail .main_text figcaption {
+  line-height: 1.7;
+  letter-spacing: var(--yr-ls-body);
+  color: var(--yr-color-text-sub);
+  margin-top: 0.4em;
+}
+
+body#news_detail .main_text .ez-toc-list,
+body#news_detail .main_text ul,
+body#news_detail .main_text ol {
+  line-height: var(--yr-lh-body);
+  letter-spacing: var(--yr-ls-body);
+}
+
+body#news_detail .main_text li {
+  margin-bottom: 0.55em;
+}
+
+body#news_detail .article_main .wp-block-list {
+  line-height: var(--yr-lh-body);
+  letter-spacing: var(--yr-ls-body);
+}
+
+
+/* ============================================================
+   4. 目次（EasyTOC）
+   ============================================================ */
+.ez-toc-list {
+  line-height: 1.85 !important;
+  letter-spacing: 0.04em;
+}
+
+.ez-toc-list li {
+  margin-bottom: 0.5em;
+}
+
+.toc_title {
+  letter-spacing: var(--yr-ls-heading);
+  font-weight: 700;
+}
+
+
+/* ============================================================
+   5. カテゴリ・タグ・メタ情報
+   ============================================================ */
+body#news_detail .article_main .category a {
+  border-radius: var(--yr-radius-sm);  /* 30.5px → 8px でクリーンに */
+  letter-spacing: var(--yr-ls-ui);
+  font-size: 13px;
+  padding: 4px 14px;
+  transition: opacity var(--yr-transition-base);
+}
+
+body#news_detail .article_main .tag_list li {
+  border-radius: var(--yr-radius-xs);  /* ほぼ角丸なしのフラットバッジ */
+}
+
+body#news_detail .article_main .tag_list li a {
+  letter-spacing: var(--yr-ls-ui);
+}
+
+body#news_detail .date {
+  color: var(--yr-color-text-muted);
+  letter-spacing: var(--yr-ls-ui);
+}
+
+body#news_detail .article_main .post_data {
+  align-items: center;
+  gap: 8px;
+}
+
+
+/* ============================================================
+   6. ハイライト（マーカー）
+   ============================================================ */
+body#news_detail .article_main .marker_yellow {
+  background: linear-gradient(to top, #f5e94a 35%, transparent 35%);
+  font-weight: 600;
+  padding: 0 2px;
+}
+
+body#news_detail .article_main .marker_blue {
+  background: linear-gradient(to top, #a8d4f5 35%, transparent 35%);
+  font-weight: 600;
+  padding: 0 2px;
+}
+
+
+/* ============================================================
+   7. 関連記事カード
+   ============================================================ */
+body#news_detail .article_main .related_article li a {
+  border-radius: var(--yr-radius-md);    /* 1px solid black → 角丸 + ソフトボーダー */
+  border: 1px solid var(--yr-color-border);
+  box-shadow: var(--yr-shadow-sm);
+  transition: box-shadow var(--yr-transition-base), transform var(--yr-transition-base);
+}
+
+body#news_detail .article_main .related_article li a:hover {
+  box-shadow: var(--yr-shadow-card-hover);
+  transform: translateY(-1px);
+}
+
+body#news_detail .article_main .related_article li img {
+  border-radius: var(--yr-radius-sm);   /* 15px → 8px */
+}
+
+body#news_detail .article_main .related_article li strong {
+  font-weight: 600;
+  line-height: var(--yr-lh-heading);
+  letter-spacing: var(--yr-ls-body);
+}
+
+
+/* ============================================================
+   8. SNSシェアボタン
+   ============================================================ */
+body#news_detail .article_main .share {
+  letter-spacing: 0.1em;
+}
+
+body#news_detail .article_main .sns a {
+  border-radius: var(--yr-radius-md);  /* 10px → 12px */
+  letter-spacing: var(--yr-ls-ui);
+  transition: opacity var(--yr-transition-base), box-shadow var(--yr-transition-base), transform var(--yr-transition-base);
+}
+
+body#news_detail .article_main .sns a:hover {
+  opacity: 0.88;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  transform: translateY(-1px);
+}
+
+
+/* ============================================================
+   9. 監修者ブロック
+   ============================================================ */
+body#news_detail .article_main .article_supervisor {
+  border-radius: var(--yr-radius-md);
+  border: 1px solid var(--yr-color-border);
+  box-shadow: var(--yr-shadow-sm);
+  background: var(--yr-color-bg-white);
+}
+
+body#news_detail .article_main .article_supervisor .name {
+  letter-spacing: var(--yr-ls-body);
+}
+
+body#news_detail .article_main .article_supervisor .user_desc {
+  border-left-color: var(--yr-color-border);
+  line-height: var(--yr-lh-body);
+  letter-spacing: var(--yr-ls-body);
+  font-size: 14px;
+}
+
+
+/* ============================================================
+   10. 人気記事リスト・サイドバー
+   ============================================================ */
+body#news_detail .popular_posts h5 {
+  letter-spacing: 0.08em;
+}
+
+body#news_detail .popular_posts ul.post_list li h2 {
+  letter-spacing: var(--yr-ls-body);
+  line-height: 1.65;
+}
+
+
+/* ============================================================
+   11. 記事カード（post_list 共通）
+   ============================================================ */
+.post_list li {
+  border-radius: var(--yr-radius-lg);  /* 20px → 16px でクリーンに */
+  box-shadow: var(--yr-shadow-card);
+  transition: box-shadow var(--yr-transition-base), transform var(--yr-transition-base);
+}
+
+.post_list li:hover {
+  box-shadow: var(--yr-shadow-card-hover);
+  transform: translateY(-2px);
+}
+
+.post_list li a .post_thumb {
+  border-radius: var(--yr-radius-lg);
+}
+
+.post_list li .post_cat {
+  border-radius: var(--yr-radius-xs);   /* 12.5px → 4px のフラットバッジ */
+  letter-spacing: var(--yr-ls-ui);
+}
+
+.post_list li h2 {
+  line-height: 1.65;
+  letter-spacing: var(--yr-ls-body);
+}
+
+
+/* ============================================================
+   12. カテゴリタブ
+   ============================================================ */
+.cat_list li a,
+.cat_list li span {
+  border-radius: var(--yr-radius-sm);   /* 30.5px → 8px */
+  letter-spacing: var(--yr-ls-ui);
+  transition: background var(--yr-transition-base), color var(--yr-transition-base);
+}
+
+
+/* ============================================================
+   13. ページネーション
+   ============================================================ */
+.pagenation a {
+  border-radius: var(--yr-radius-xs);
+  letter-spacing: var(--yr-ls-ui);
+  transition: background var(--yr-transition-base), color var(--yr-transition-base);
+}
+
+.pagenation .current_pg,
+.pagenation a:hover {
+  border-radius: var(--yr-radius-xs);
+}
+
+
+/* ============================================================
+   14. 一覧へ戻るボタン / もっと見るボタン
+   ============================================================ */
+.button_back,
+.button_more {
+  /* 既存の pill 形状は維持、letter-spacing と transition 追加 */
+  letter-spacing: var(--yr-ls-ui);
+  transition: background var(--yr-transition-base), color var(--yr-transition-base),
+              box-shadow var(--yr-transition-base), transform var(--yr-transition-base);
+}
+
+.button_back:hover,
+.button_more:hover {
+  background: var(--yr-color-primary) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(79, 114, 176, 0.35);
+  transform: translateY(-1px);
+  opacity: 1;
+}
+
+.button_back:hover::after,
+.button_more:hover::after {
+  border-left-color: #ffffff;
+}
+
+
+/* ============================================================
+   15. LINE 友だち追加バナー
+   ============================================================ */
+body#news_detail .line_add_friend {
+  border-radius: var(--yr-radius-lg);   /* 20px → 16px */
+  transition: box-shadow var(--yr-transition-base), transform var(--yr-transition-base);
+}
+
+body#news_detail .line_add_friend:hover {
+  box-shadow: 0 4px 18px rgba(6, 199, 85, 0.22);
+  transform: translateY(-1px);
+}
+
+body#news_detail .line_add_friend .upper_text {
+  letter-spacing: var(--yr-ls-body);
+  line-height: 1.7;
+}
+
+
+/* ============================================================
+   16. CTA（無料体験 / 予約）セクション
+   ============================================================ */
+.button_reserve {
+  border-radius: 60px;                  /* 72px → 60px で少し引き締め */
+  letter-spacing: var(--yr-ls-ui);
+  transition: box-shadow var(--yr-transition-base), transform var(--yr-transition-base);
+}
+
+.button_reserve:hover {
+  box-shadow: 0 6px 20px rgba(194, 153, 8, 0.4);
+  transform: translateY(-1px);
+}
+
+body#news_detail section.trial {
+  border-radius: var(--yr-radius-lg);
+}
+
+/* trial inner テキスト */
+body#news_detail section.trial .trial_inner .pc_flex ul li {
+  letter-spacing: var(--yr-ls-body);
+  line-height: 1.85;
+}
+
+
+/* ============================================================
+   17. WordPress ブロックエディタ要素の微調整
+   ============================================================ */
+
+/* vk_borderBox */
+.vk_borderBox_body {
+  border-radius: var(--yr-radius-md);
+}
+
+/* wp-block-quote */
+body#news_detail .main_text blockquote,
+body#news_detail .main_text .wp-block-quote {
+  border-left: 4px solid var(--yr-color-primary);
+  border-radius: 0 var(--yr-radius-sm) var(--yr-radius-sm) 0;
+  background: var(--yr-color-primary-light);
+  padding: 1em 1.25em;
+  margin: 1.5em 0;
+  color: var(--yr-color-text-sub);
+  line-height: var(--yr-lh-body);
+  letter-spacing: var(--yr-ls-body);
+}
+
+/* テーブル */
+body#news_detail .main_text table {
+  border-collapse: collapse;
+  width: 100%;
+  border-radius: var(--yr-radius-sm);
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 1.7;
+  letter-spacing: var(--yr-ls-body);
+}
+
+body#news_detail .main_text th {
+  background: var(--yr-color-primary);
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: var(--yr-ls-ui);
+  padding: 10px 14px;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+body#news_detail .main_text td {
+  padding: 10px 14px;
+  border-color: var(--yr-color-border);
+  vertical-align: top;
+}
+
+body#news_detail .main_text tr:nth-child(even) td {
+  background: var(--yr-color-bg);
+}
+
+/* 画像キャプション */
+body#news_detail .main_text figure {
+  margin: 1.5em 0;
+}
+
+body#news_detail .main_text img {
+  border-radius: var(--yr-radius-sm);
+}
+
+
+/* ============================================================
+   18. SP（〜1024px）タイポグラフィ上書き
+   ============================================================ */
+@media screen and (max-width: 1024px) {
+
+  body#news_detail .article_main h1 {
+    font-size: var(--yr-h1-sp);        /* 24px → 22px（少し抑えて余白確保） */
+    line-height: 1.6;
+    letter-spacing: var(--yr-ls-heading);
+    margin: 12px 0 14px;
+  }
+
+  body#news_detail .article_main h2 {
+    font-size: var(--yr-h2-sp);        /* 18px 維持 */
+    line-height: 1.65;
+    letter-spacing: var(--yr-ls-heading);
+    padding: 9px 14px 9px 10px;       /* 左ボーダー分の内側余白調整 */
+    margin: 2em 0 0.9em;
+  }
+
+  body#news_detail .article_main h3 {
+    font-size: var(--yr-h3-sp);        /* 16px 維持 */
+    line-height: 1.65;
+    letter-spacing: var(--yr-ls-heading);
+    margin: 1.8em 0 0.7em;
+    padding-bottom: 7px;
+  }
+
+  /* SP 本文フォントサイズ: 14px → 16px */
+  body#news_detail .main_text p,
+  body#news_detail .main_text figcaption,
+  body#news_detail .main_text .ez-toc-list,
+  body#news_detail .main_text ul,
+  body#news_detail .main_text ol {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: var(--yr-lh-body-sp);
+    letter-spacing: var(--yr-ls-body);
+  }
+
+  body#news_detail .article_main p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: var(--yr-lh-body-sp);
+    letter-spacing: var(--yr-ls-body);
+    margin: 1.25em 0;
+  }
+
+  body#news_detail .article_main .wp-block-list {
+    font-size: 16px;
+    line-height: var(--yr-lh-body-sp);
+    letter-spacing: var(--yr-ls-body);
+  }
+
+  /* サムネイル画像 */
+  body#news_detail .article_main .category + img {
+    border-radius: var(--yr-radius-sm);
+  }
+
+}
+
+
+/* ============================================================
+   19. PC（1025px〜）タイポグラフィ上書き
+   ============================================================ */
+@media screen and (min-width: 1025px), print {
+
+  body#news_detail .article_main h1 {
+    font-size: var(--yr-h1-pc);        /* 30px 維持 */
+    line-height: 1.55;
+    letter-spacing: var(--yr-ls-heading);
+    margin: 22px 0 18px;
+  }
+
+  body#news_detail .article_main h2 {
+    font-size: var(--yr-h2-pc);        /* 30px → 24px（情報密度を上げる） */
+    line-height: 1.55;
+    letter-spacing: var(--yr-ls-heading);
+    padding: 12px 18px 12px 14px;     /* 左ボーダー分の内側余白調整 */
+    margin: 2.2em 0 1em;
+  }
+
+  body#news_detail .article_main h3 {
+    font-size: var(--yr-h3-pc);        /* 20px 維持 */
+    line-height: 1.55;
+    letter-spacing: var(--yr-ls-heading);
+    margin: 2em 0 0.85em;
+    padding-bottom: 9px;
+  }
+
+  /* PC 本文: font-size 16px → 17px、font-weight 300 → 400 */
+  body#news_detail .article_main p {
+    font-size: var(--yr-font-size-base);
+    font-weight: 400;
+    line-height: var(--yr-lh-body);
+    letter-spacing: var(--yr-ls-body);
+    margin: 1.35em 0;
+  }
+
+  body#news_detail .main_text figcaption,
+  body#news_detail .main_text .ez-toc-list,
+  body#news_detail .main_text ul,
+  body#news_detail .main_text ol {
+    font-size: var(--yr-font-size-base);
+    font-weight: 400;
+    line-height: var(--yr-lh-body);
+    letter-spacing: var(--yr-ls-body);
+  }
+
+  body#news_detail .article_main .wp-block-list {
+    font-size: var(--yr-font-size-base);
+    line-height: var(--yr-lh-body);
+    letter-spacing: var(--yr-ls-body);
+  }
+
+  /* サムネイル画像 */
+  body#news_detail .article_main .category + img {
+    border-radius: var(--yr-radius-md);
+    object-fit: cover;
+  }
+
+  /* 記事メイン幅 (802px) は維持しつつ内部余白を整える */
+  body#news_detail .article_main {
+    /* max-width は既存 (802px) を踏襲 */
+  }
+
+  /* PC: 監修者名 */
+  body#news_detail .article_main .article_supervisor .name {
+    font-size: 17px;
+  }
+
+}
