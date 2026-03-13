@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+/* Noto Sans JP — note / Notion に近い太さ感を実現するためのWebフォント
+   400: 本文、500: 強調本文・小見出し、700: 見出し */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap');
+
 /*
  * Readability Enhancement CSS
  * yomisama.overfocus.co.jp / news detail page
@@ -27,7 +31,7 @@
   --yr-color-line:           #06C755;
 
   /* テキストカラー */
-  --yr-color-text:           #1c1c1e;   /* 純黒より柔らかく、Notion準拠 */
+  --yr-color-text:           #111111;   /* Noto Sans JP の線の細さを補う分、色を濃く */
   --yr-color-text-sub:       #4a4a4a;
   --yr-color-text-muted:     #7a7a7a;
   --yr-color-text-placeholder: #ababab;
@@ -39,8 +43,10 @@
   --yr-color-border:         #e5e5e3;   /* 薄くてクリアなボーダー */
   --yr-color-border-strong:  #c8c8c5;
 
-  /* タイポグラフィ */
-  --yr-font-base:            "tt_m", "Hiragino Kaku Gothic Pro", "Yu Gothic", "游ゴシック", "メイリオ", Meiryo, sans-serif;
+  /* タイポグラフィ
+     Noto Sans JP を先頭に置くことで note / Notion に近い太さ感を実現
+     tt_m（サイト独自フォント）はフォールバックとして残す */
+  --yr-font-base:            "Noto Sans JP", "tt_m", "Hiragino Kaku Gothic Pro", "Yu Gothic", "游ゴシック", "メイリオ", Meiryo, sans-serif;
   --yr-font-size-base:       17px;      /* 16px → 17px で読みやすさ向上 */
   --yr-font-size-sm:         15px;
   --yr-font-size-xs:         13px;
@@ -163,9 +169,10 @@ body#news_detail .article_main h3::after {
 
 /* ---- 本文 p ----
      既存: font-weight 300; line-height 24px（固定値 = 劣悪）
-     改善: font-weight 400; line-height 2.0; letter-spacing 0.05em */
+     改善: font-weight 500; line-height 2.0; letter-spacing 0.05em
+     Noto Sans JP は 500 が note に近い見た目になる */
 body#news_detail .article_main p {
-  font-weight: 400;
+  font-weight: 500;
   line-height: var(--yr-lh-body);
   letter-spacing: var(--yr-ls-body);
   color: var(--yr-color-text);
@@ -174,7 +181,7 @@ body#news_detail .article_main p {
 
 /* main_text 内の本文・リスト系 */
 body#news_detail .main_text p {
-  font-weight: 400;
+  font-weight: 500;
   line-height: var(--yr-lh-body);
   letter-spacing: var(--yr-ls-body);
   color: var(--yr-color-text);
@@ -579,14 +586,14 @@ body#news_detail .main_text img {
   body#news_detail .main_text ul,
   body#news_detail .main_text ol {
     font-size: 16px;
-    font-weight: 400;
+    font-weight: 500;
     line-height: var(--yr-lh-body-sp);
     letter-spacing: var(--yr-ls-body);
   }
 
   body#news_detail .article_main p {
     font-size: 16px;
-    font-weight: 400;
+    font-weight: 500;
     line-height: var(--yr-lh-body-sp);
     letter-spacing: var(--yr-ls-body);
     margin: 1.25em 0;
@@ -637,7 +644,7 @@ body#news_detail .main_text img {
   /* PC 本文: font-size 16px → 17px、font-weight 300 → 400 */
   body#news_detail .article_main p {
     font-size: var(--yr-font-size-base);
-    font-weight: 400;
+    font-weight: 500;
     line-height: var(--yr-lh-body);
     letter-spacing: var(--yr-ls-body);
     margin: 1.35em 0;
@@ -648,7 +655,7 @@ body#news_detail .main_text img {
   body#news_detail .main_text ul,
   body#news_detail .main_text ol {
     font-size: var(--yr-font-size-base);
-    font-weight: 400;
+    font-weight: 500;
     line-height: var(--yr-lh-body);
     letter-spacing: var(--yr-ls-body);
   }

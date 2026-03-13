@@ -403,6 +403,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <style id="readability-override">
 @charset "UTF-8";
 
+/* Noto Sans JP — note / Notion に近い太さ感を実現するためのWebフォント
+   400: 本文、500: 強調本文・小見出し、700: 見出し */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap');
+
 /*
  * Readability Enhancement CSS
  * yomisama.overfocus.co.jp / news detail page
@@ -430,7 +434,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   --yr-color-line:           #06C755;
 
   /* テキストカラー */
-  --yr-color-text:           #1c1c1e;   /* 純黒より柔らかく、Notion準拠 */
+  --yr-color-text:           #111111;   /* Noto Sans JP の線の細さを補う分、色を濃く */
   --yr-color-text-sub:       #4a4a4a;
   --yr-color-text-muted:     #7a7a7a;
   --yr-color-text-placeholder: #ababab;
@@ -442,8 +446,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   --yr-color-border:         #e5e5e3;   /* 薄くてクリアなボーダー */
   --yr-color-border-strong:  #c8c8c5;
 
-  /* タイポグラフィ */
-  --yr-font-base:            "tt_m", "Hiragino Kaku Gothic Pro", "Yu Gothic", "游ゴシック", "メイリオ", Meiryo, sans-serif;
+  /* タイポグラフィ
+     Noto Sans JP を先頭に置くことで note / Notion に近い太さ感を実現
+     tt_m（サイト独自フォント）はフォールバックとして残す */
+  --yr-font-base:            "Noto Sans JP", "tt_m", "Hiragino Kaku Gothic Pro", "Yu Gothic", "游ゴシック", "メイリオ", Meiryo, sans-serif;
   --yr-font-size-base:       17px;      /* 16px → 17px で読みやすさ向上 */
   --yr-font-size-sm:         15px;
   --yr-font-size-xs:         13px;
@@ -566,9 +572,10 @@ body#news_detail .article_main h3::after {
 
 /* ---- 本文 p ----
      既存: font-weight 300; line-height 24px（固定値 = 劣悪）
-     改善: font-weight 400; line-height 2.0; letter-spacing 0.05em */
+     改善: font-weight 500; line-height 2.0; letter-spacing 0.05em
+     Noto Sans JP は 500 が note に近い見た目になる */
 body#news_detail .article_main p {
-  font-weight: 400;
+  font-weight: 500;
   line-height: var(--yr-lh-body);
   letter-spacing: var(--yr-ls-body);
   color: var(--yr-color-text);
@@ -577,7 +584,7 @@ body#news_detail .article_main p {
 
 /* main_text 内の本文・リスト系 */
 body#news_detail .main_text p {
-  font-weight: 400;
+  font-weight: 500;
   line-height: var(--yr-lh-body);
   letter-spacing: var(--yr-ls-body);
   color: var(--yr-color-text);
@@ -982,14 +989,14 @@ body#news_detail .main_text img {
   body#news_detail .main_text ul,
   body#news_detail .main_text ol {
     font-size: 16px;
-    font-weight: 400;
+    font-weight: 500;
     line-height: var(--yr-lh-body-sp);
     letter-spacing: var(--yr-ls-body);
   }
 
   body#news_detail .article_main p {
     font-size: 16px;
-    font-weight: 400;
+    font-weight: 500;
     line-height: var(--yr-lh-body-sp);
     letter-spacing: var(--yr-ls-body);
     margin: 1.25em 0;
@@ -1040,7 +1047,7 @@ body#news_detail .main_text img {
   /* PC 本文: font-size 16px → 17px、font-weight 300 → 400 */
   body#news_detail .article_main p {
     font-size: var(--yr-font-size-base);
-    font-weight: 400;
+    font-weight: 500;
     line-height: var(--yr-lh-body);
     letter-spacing: var(--yr-ls-body);
     margin: 1.35em 0;
@@ -1051,7 +1058,7 @@ body#news_detail .main_text img {
   body#news_detail .main_text ul,
   body#news_detail .main_text ol {
     font-size: var(--yr-font-size-base);
-    font-weight: 400;
+    font-weight: 500;
     line-height: var(--yr-lh-body);
     letter-spacing: var(--yr-ls-body);
   }
@@ -1091,7 +1098,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- begin header -->
 <header>
 		<div id="header_inner">
-		<h1 id="logo"><a href="/"><img src="https://yomisama.overfocus.co.jp/common/images/header_logo.png" alt="ロゴ"></a></h1>
+		<h1 id="logo"><a href="https://yomisama.overfocus.co.jp/"><img src="https://yomisama.overfocus.co.jp/common/images/header_logo.png" alt="ロゴ"></a></h1>
 		<nav>
 			<ul>
 				<li><a href="https://yomisama.overfocus.co.jp/program/">ヨミサマ。の強み</a></li>
@@ -1128,7 +1135,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	<div id="contents">
 		<div class="wrap">
 			<ul id="pankuzu">
-				<li><a href="/">東大生による国語専門個別指導 ヨミサマ。</a></li>
+				<li><a href="https://yomisama.overfocus.co.jp/">東大生による国語専門個別指導 ヨミサマ。</a></li>
 				<li><a href="https://yomisama.overfocus.co.jp/news/">記事一覧</a></li>
 				<li><span>【ヨミサマ。体験記#10】定期テストの点数が5割から8-9割に急成長。高得点を維持できるようになった秘訣とは？</span></li>
 			</ul>
@@ -1424,7 +1431,7 @@ body .button_reserve .free {
 			<li><a href="https://yomisama.overfocus.co.jp/overview/">会社情報</a></li>
 			<li><a href="https://yomisama.overfocus.co.jp/privacy/">プライバシーポリシー</a></li>
 		</ul>
-		<a href="/" target="_blank" id="footer_logo"><img src="https://yomisama.overfocus.co.jp/common/images/footer_logo.jpg" alt="ロゴ"></a>
+		<a href="https://yomisama.overfocus.co.jp/" target="_blank" id="footer_logo"><img src="https://yomisama.overfocus.co.jp/common/images/footer_logo.jpg" alt="ロゴ"></a>
 	</div></footer>
 <!-- / end footer -->
 </body>
