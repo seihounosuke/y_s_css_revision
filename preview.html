@@ -806,6 +806,40 @@ body#news_detail .popular_posts ul.post_list li h2 {
   transition: background var(--yr-transition-base), color var(--yr-transition-base);
 }
 
+/* ---- SP: 横スクロール対応（折り返しをなくして 1行に） ---- */
+@media screen and (max-width: 1024px) {
+  .cat_list {
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    justify-content: flex-start !important;
+    padding: 4px 16px 10px !important;
+    scrollbar-width: none !important;       /* Firefox */
+    -ms-overflow-style: none !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  .cat_list::-webkit-scrollbar {
+    display: none !important;
+  }
+  .cat_list li {
+    flex-shrink: 0 !important;
+  }
+  .cat_list li a,
+  .cat_list li span {
+    white-space: nowrap !important;
+    font-size: 13px !important;
+    padding: 5px 14px !important;
+  }
+}
+
+/* ---- PC: 30px → 15px に縮小し、行数を削減 ---- */
+@media screen and (min-width: 1025px), print {
+  .cat_list li a,
+  .cat_list li span {
+    font-size: 15px !important;
+    padding: 6px 20px !important;
+  }
+}
+
 
 /* ============================================================
    13. ページネーション
@@ -889,6 +923,26 @@ body#news_detail section.trial {
 body#news_detail section.trial .trial_inner .pc_flex ul li {
   letter-spacing: var(--yr-ls-body);
   line-height: 1.85;
+}
+
+/* ============================================================
+   ボタン内 p 要素の干渉防止
+   section.trial は .article_main の中に存在するため、
+   #news_detail .article_main p の margin/line-height が
+   p.free・p.upper_text・p.lower_text に波及してボタンが崩れる。
+   .button_reserve の子 p は本文スタイルから除外する。
+   ============================================================ */
+#news_detail .article_main .button_reserve p,
+#news_detail .article_main .button_reserve .free,
+section.trial .button_reserve p,
+section.reservation .button_reserve p,
+.button_reserve p,
+.button_reserve .free {
+  margin: 0 !important;
+  line-height: 1.2 !important;
+  letter-spacing: normal !important;
+  font-size: inherit !important;
+  color: inherit !important;
 }
 
 
@@ -1146,7 +1200,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- begin header -->
 <header>
 		<div id="header_inner">
-		<h1 id="logo"><a href="https://yomisama.overfocus.co.jp/"><img src="https://yomisama.overfocus.co.jp/common/images/header_logo.png" alt="ロゴ"></a></h1>
+		<h1 id="logo"><a href="/"><img src="https://yomisama.overfocus.co.jp/common/images/header_logo.png" alt="ロゴ"></a></h1>
 		<nav>
 			<ul>
 				<li><a href="https://yomisama.overfocus.co.jp/program/">ヨミサマ。の強み</a></li>
@@ -1183,7 +1237,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	<div id="contents">
 		<div class="wrap">
 			<ul id="pankuzu">
-				<li><a href="https://yomisama.overfocus.co.jp/">東大生による国語専門個別指導 ヨミサマ。</a></li>
+				<li><a href="/">東大生による国語専門個別指導 ヨミサマ。</a></li>
 				<li><a href="https://yomisama.overfocus.co.jp/news/">記事一覧</a></li>
 				<li><span>【ヨミサマ。体験記#10】定期テストの点数が5割から8-9割に急成長。高得点を維持できるようになった秘訣とは？</span></li>
 			</ul>
@@ -1479,7 +1533,7 @@ body .button_reserve .free {
 			<li><a href="https://yomisama.overfocus.co.jp/overview/">会社情報</a></li>
 			<li><a href="https://yomisama.overfocus.co.jp/privacy/">プライバシーポリシー</a></li>
 		</ul>
-		<a href="https://yomisama.overfocus.co.jp/" target="_blank" id="footer_logo"><img src="https://yomisama.overfocus.co.jp/common/images/footer_logo.jpg" alt="ロゴ"></a>
+		<a href="/" target="_blank" id="footer_logo"><img src="https://yomisama.overfocus.co.jp/common/images/footer_logo.jpg" alt="ロゴ"></a>
 	</div></footer>
 <!-- / end footer -->
 </body>
