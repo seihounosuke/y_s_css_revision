@@ -213,20 +213,119 @@ body#news_detail .article_main .wp-block-list {
 
 
 /* ============================================================
-   4. 目次（EasyTOC）
+   4. 目次（toc_container / EasyTOC 共通）
    ============================================================ */
+
+/* ---- コンテナボックス ---- */
+#toc_container,
+.ez-toc-container-wrap {
+  background: linear-gradient(135deg, rgba(79, 114, 176, 0.06) 0%, #ffffff 100%) !important;
+  border: 1px solid rgba(79, 114, 176, 0.28) !important;
+  border-radius: var(--yr-radius-md) !important;
+  padding: 22px 26px 20px !important;
+  margin: 2em 0 2em !important;
+  box-shadow: 0 3px 14px rgba(79, 114, 176, 0.09) !important;
+}
+
+/* ---- 目次タイトル ---- */
+#toc_container p.toc_title,
+.toc_title,
+.ez-toc-title {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.1em !important;
+  color: var(--yr-color-primary) !important;
+  margin: 0 0 14px !important;
+  padding-bottom: 10px !important;
+  border-bottom: 2px solid rgba(79, 114, 176, 0.2) !important;
+  display: block !important;
+  line-height: 1 !important;
+  text-align: center !important;
+}
+
+/* ---- 目次リスト ---- */
+#toc_container .toc_list,
 .ez-toc-list {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
   line-height: 1.85 !important;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.04em !important;
 }
 
+#toc_container .toc_list li,
 .ez-toc-list li {
-  margin-bottom: 0.5em;
+  margin-bottom: 0 !important;
+  padding: 7px 10px 7px 0 !important;
+  border-bottom: 1px solid rgba(79, 114, 176, 0.1) !important;
+  transition: background var(--yr-transition-base) !important;
 }
 
-.toc_title {
-  letter-spacing: var(--yr-ls-heading);
-  font-weight: 700;
+#toc_container .toc_list > li:last-child,
+.ez-toc-list > li:last-child {
+  border-bottom: none !important;
+}
+
+/* ---- h2 レベルリンク ---- */
+#toc_container .toc_list > li > a,
+.ez-toc-list > li > a {
+  font-weight: 600 !important;
+  color: var(--yr-color-primary) !important;
+  text-decoration: none !important;
+  padding-left: 16px !important;
+  position: relative !important;
+  display: block !important;
+}
+
+#toc_container .toc_list > li > a::before,
+.ez-toc-list > li > a::before {
+  content: '' !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 6px !important;
+  height: 6px !important;
+  background: var(--yr-color-primary) !important;
+  border-radius: 50% !important;
+}
+
+/* ---- h3 レベル（入れ子） ---- */
+#toc_container .toc_list li ul,
+.ez-toc-list li ul {
+  list-style: none !important;
+  padding: 4px 0 0 20px !important;
+  margin: 0 !important;
+}
+
+#toc_container .toc_list li ul li,
+.ez-toc-list li ul li {
+  padding: 5px 0 5px 0 !important;
+  border-bottom: none !important;
+}
+
+#toc_container .toc_list li ul li a,
+.ez-toc-list li ul li a {
+  font-weight: 400 !important;
+  color: var(--yr-color-text-sub) !important;
+  text-decoration: none !important;
+  padding-left: 14px !important;
+  position: relative !important;
+  display: block !important;
+  font-size: 0.92em !important;
+}
+
+#toc_container .toc_list li ul li a::before,
+.ez-toc-list li ul li a::before {
+  content: '' !important;
+  position: absolute !important;
+  left: 2px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 5px !important;
+  height: 1px !important;
+  background: var(--yr-color-border-strong) !important;
+  border-radius: 0 !important;
 }
 
 
@@ -409,7 +508,8 @@ body#news_detail .popular_posts ul.post_list li h2 {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
     gap: 7px !important;
-    padding: 4px 16px 12px !important;
+    padding: 4px 16px 4px !important;
+    margin-bottom: 0 !important;
     overflow-x: visible !important;
     flex-wrap: unset !important;
   }
@@ -547,6 +647,14 @@ body#news_detail section.trial .trial_inner .pc_flex ul li {
    p.free・p.upper_text・p.lower_text に波及してボタンが崩れる。
    .button_reserve の子 p は本文スタイルから除外する。
    ============================================================ */
+/* ボタン全体のテキストカラーを黒に固定（既存テーマの青文字上書き） */
+.button_reserve,
+.button_reserve a,
+.button_reserve a:link,
+.button_reserve a:visited {
+  color: #111111 !important;
+}
+
 #news_detail .article_main .button_reserve p,
 #news_detail .article_main .button_reserve .free,
 section.trial .button_reserve p,
@@ -557,7 +665,7 @@ section.reservation .button_reserve p,
   line-height: 1.2 !important;
   letter-spacing: normal !important;
   font-size: inherit !important;
-  color: inherit !important;
+  color: #111111 !important;
 }
 
 
@@ -723,6 +831,12 @@ body#news_detail .main_text img {
     font-size: 16px;
     line-height: var(--yr-lh-body-sp);
     letter-spacing: var(--yr-ls-body);
+  }
+
+  /* 目次 SP サイズ調整 */
+  #toc_container,
+  .ez-toc-container-wrap {
+    padding: 18px 20px 16px !important;
   }
 
   /* サムネイル画像 */
