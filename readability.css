@@ -429,12 +429,29 @@ body#news_detail .popular_posts ul.post_list li h2 {
   }
 }
 
-/* ---- PC: 30px → 15px に縮小し、行数を削減 ---- */
+/* ---- PC: auto-fill グリッド（等幅・等間隔で整頓） ---- */
 @media screen and (min-width: 1025px), print {
+  .cat_list {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important;
+    gap: 8px !important;
+    padding: 4px 0 12px !important;
+    overflow-x: visible !important;
+    flex-wrap: unset !important;
+  }
+  .cat_list li {
+    flex-shrink: unset !important;
+    min-width: 0 !important;
+  }
   .cat_list li a,
   .cat_list li span {
+    display: block !important;
+    text-align: center !important;
+    white-space: normal !important;
     font-size: 15px !important;
-    padding: 6px 20px !important;
+    padding: 8px 12px !important;
+    line-height: 1.4 !important;
+    border-width: 1px !important;
   }
 }
 
