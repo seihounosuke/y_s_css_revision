@@ -403,28 +403,29 @@ body#news_detail .popular_posts ul.post_list li h2 {
   transition: background var(--yr-transition-base), color var(--yr-transition-base);
 }
 
-/* ---- SP: 横スクロール対応（折り返しをなくして 1行に） ---- */
+/* ---- SP: 3列グリッド（全タグをスクロールなしで表示） ---- */
 @media screen and (max-width: 1024px) {
   .cat_list {
-    flex-wrap: nowrap !important;
-    overflow-x: auto !important;
-    justify-content: flex-start !important;
-    padding: 4px 16px 10px !important;
-    scrollbar-width: none !important;       /* Firefox */
-    -ms-overflow-style: none !important;
-    -webkit-overflow-scrolling: touch;
-  }
-  .cat_list::-webkit-scrollbar {
-    display: none !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 7px !important;
+    padding: 4px 16px 12px !important;
+    overflow-x: visible !important;
+    flex-wrap: unset !important;
   }
   .cat_list li {
-    flex-shrink: 0 !important;
+    flex-shrink: unset !important;
+    min-width: 0 !important;    /* グリッドセルからはみ出さないように */
   }
   .cat_list li a,
   .cat_list li span {
-    white-space: nowrap !important;
+    display: block !important;
+    text-align: center !important;
+    white-space: normal !important;
     font-size: 13px !important;
-    padding: 5px 14px !important;
+    padding: 8px 6px !important;
+    line-height: 1.4 !important;
+    border-width: 1px !important;   /* 太すぎる枠を細く */
   }
 }
 
