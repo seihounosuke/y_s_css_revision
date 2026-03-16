@@ -647,20 +647,20 @@ body#news_detail section.trial .trial_inner .pc_flex ul li {
    p.free・p.upper_text・p.lower_text に波及してボタンが崩れる。
    .button_reserve の子 p は本文スタイルから除外する。
    ============================================================ */
-/* ボタン全体のテキストカラーを黒に固定（既存テーマの青文字上書き） */
-.button_reserve,
-.button_reserve a,
-.button_reserve a:link,
-.button_reserve a:visited {
+/* ボタン全体のテキストカラーを黒に固定（既存テーマの青文字上書き）
+   ※ news_detail 内のみに限定（他ページのCTA崩れ防止） */
+body#news_detail .button_reserve,
+body#news_detail .button_reserve a,
+body#news_detail .button_reserve a:link,
+body#news_detail .button_reserve a:visited {
   color: #111111 !important;
 }
 
+/* ボタン内 p / .free の本文スタイル干渉防止（news_detail 内のみ） */
 #news_detail .article_main .button_reserve p,
 #news_detail .article_main .button_reserve .free,
-section.trial .button_reserve p,
-section.reservation .button_reserve p,
-.button_reserve p,
-.button_reserve .free {
+body#news_detail section.trial .button_reserve p,
+body#news_detail section.reservation .button_reserve p {
   margin: 0 !important;
   line-height: 1.2 !important;
   letter-spacing: normal !important;
