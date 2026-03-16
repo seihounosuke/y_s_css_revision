@@ -656,9 +656,8 @@ body#news_detail .button_reserve a:visited {
   color: #111111 !important;
 }
 
-/* ボタン内 p / .free の本文スタイル干渉防止（news_detail 内のみ） */
+/* ボタン内 p の本文スタイル干渉防止（news_detail 内のみ） */
 #news_detail .article_main .button_reserve p,
-#news_detail .article_main .button_reserve .free,
 body#news_detail section.trial .button_reserve p,
 body#news_detail section.reservation .button_reserve p {
   margin: 0 !important;
@@ -666,6 +665,11 @@ body#news_detail section.reservation .button_reserve p {
   letter-spacing: normal !important;
   font-size: inherit !important;
   color: #111111 !important;
+}
+
+/* 「無料」円形バッジは暗背景のため文字を白に（全ページ共通） */
+.button_reserve .free {
+  color: #ffffff !important;
 }
 
 
