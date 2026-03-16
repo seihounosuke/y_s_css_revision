@@ -667,7 +667,9 @@ body#news_detail section.reservation .button_reserve p {
   color: #111111 !important;
 }
 
-/* 「無料」円形バッジは暗背景のため文字を白に（全ページ共通） */
+/* 「無料」円形バッジは暗背景のため文字を白に
+   body#news_detail .button_reserve より詳細度を上げて確実に上書き */
+body#news_detail .button_reserve .free,
 .button_reserve .free {
   color: #ffffff !important;
 }
